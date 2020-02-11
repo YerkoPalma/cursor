@@ -3,7 +3,7 @@
 
   let coords = spring({ x: -100, y: -100 }, {
     stiffness: 0.1,
-    damping: 0.25
+    damping: 0.4
   })
   const handleMouseMove = (e) => coords.set({ x: e.clientX, y: e.clientY })
 </script>
@@ -47,14 +47,14 @@
   position: relative;
   left: 0;
   top: 0;
-  filter: invert(100%);
 
   &__outer {
-    width: 6px;
-    height: 6px;
-    border: 2px solid white;
-    background: white;
+    width: 5px;
+    height: 5px;
+    border: 1px solid #fefefe;
+    background: #fefefe;
     border-radius: 50%;
+    filter: invert(90%);
   }
 
   &__inner {

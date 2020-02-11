@@ -6,6 +6,7 @@
     damping: 0.4
   })
   const handleMouseMove = (e) => coords.set({ x: e.clientX, y: e.clientY })
+  export let color = '#fefefe'
 </script>
 
 <svelte:body
@@ -13,7 +14,7 @@
 />
 
 <div class="cursor-wrapper">
-  <div class="custom-cursor custom-cursor__outer" style="transform: translate({$coords.x}px, {$coords.y}px)">
+  <div class="custom-cursor custom-cursor__outer" style="transform: translate({$coords.x}px, {$coords.y}px); border: 1px solid {color}; background: {color};">
     <div class="custom-cursor custom-cursor__inner"></div>
   </div>
 </div>
@@ -51,10 +52,7 @@
   &__outer {
     width: 5px;
     height: 5px;
-    border: 1px solid #fefefe;
-    background: #fefefe;
     border-radius: 50%;
-    filter: invert(90%);
   }
 
   &__inner {
@@ -67,7 +65,7 @@
       position: absolute;
       width: 40%;
       height: 1px;
-      background: white;
+      background: transparent;
       transition: transform 0.1s linear;
     }
     &:before {

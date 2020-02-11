@@ -43,6 +43,7 @@ import { magneticCursor } from '@yerkopalma/cursor'
 <h2>License</h2>
 <p>MIT</p>
   `
+  let color = '#137752'
 </script>
 
 <style>
@@ -66,7 +67,13 @@ import { magneticCursor } from '@yerkopalma/cursor'
 </svelte:head>
 
 <article class="markdown-body">
+  <div>
+    <span>Cursor color:</span>
+    <button on:click="{e => color = '#137752' }">dark-green</button>
+    <button on:click="{e => color = '#A463F2' }">light-purple</button>
+    <button on:click="{e => color = '#E7040F' }">dark-red</button>
+  </div>
   {@html body}
 </article>
 
-<Cursor name="world" />
+<Cursor color={color} />

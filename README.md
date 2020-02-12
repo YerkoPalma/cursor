@@ -26,7 +26,7 @@ The default export is the svelte component adding it into your
 page will affect the your whole site. You can also set the following properties:
 
 - `global: boolean = true` => Set to false to change the cursor element only on the parent component.
-- `type: ['dot', 'circle', 'cross', 'minus']` => Predefined types of cursor, defaults to dot.
+- `type: ['dot', 'spot', 'ring', 'circle', 'cross', 'minus']` => Predefined types of cursor, defaults to dot.
 - `color: string` => A valid css color for the cursor. 
 
 ### actions

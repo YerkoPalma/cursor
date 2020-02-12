@@ -44,6 +44,7 @@ import { magneticCursor } from '@yerkopalma/cursor'
 <p>MIT</p>
   `
   let color = '#137752'
+  let type= 'dot'
 </script>
 
 <style>
@@ -72,8 +73,14 @@ import { magneticCursor } from '@yerkopalma/cursor'
     <button on:click="{e => color = '#137752' }">dark-green</button>
     <button on:click="{e => color = '#A463F2' }">light-purple</button>
     <button on:click="{e => color = '#E7040F' }">dark-red</button>
+    <span>Cursor type:</span>
+    <select bind:value={type}>
+      <option>dot</option>
+      <option>spot</option>
+      <option>ring</option>
+    </select>
   </div>
   {@html body}
 </article>
 
-<Cursor color={color} />
+<Cursor color={color} type={type}/>

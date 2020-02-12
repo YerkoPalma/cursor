@@ -2,6 +2,7 @@
   import { spring } from 'svelte/motion'
   import { onMount, afterUpdate } from 'svelte'
   import paper from 'paper'
+  import cssVars from 'svelte-css-vars'
 
   let coords = spring({ x: -100, y: -100 }, {
     stiffness: 0.1,
@@ -14,6 +15,9 @@
   let group
   let lastX = 0
   let lastY = 0
+  $: styleVars = {
+    color
+  }
 
   const setupRing = () => {
     if (type !== 'ring') {
@@ -78,14 +82,20 @@
 />
 
 <div class="cursor-wrapper">
-  <div 
-    class="custom-cursor" 
+  <div
+    use:cssVars={styleVars}
+    class="custom-cursor first" 
     class:custom-cursor-dot="{type === 'dot' || type === 'ring'}"
     class:custom-cursor-spot="{type === 'spot'}"
-    style="transform: translate({$coords.x}px, {$coords.y}px); border: 1px solid {color}; background: {color};">
-    <div class="custom-cursor custom-cursor__inner"></div>
+    class:custom-cursor-circle="{type === 'circle'}"
+    class:custom-cursor-cross-wrapper="{type === 'cross' || type === 'minus'}"
+    style="transform: translate({$coords.x}px, {$coords.y}px); ">
+    <div 
+      class="custom-cursor"
+      class:custom-cursor-cross="{type === 'cross'}"
+      class:custom-cursor-minus="{type === 'minus'}"
+      ></div>
   </div>
-  
 </div>
 
 <style type="text/scss">
@@ -110,9 +120,9 @@
   justify-content: center;
   z-index: 1600000;
   pointer-events: none;
-  // &.has-blend-mode {
-  //   mix-blend-mode: exclusion;
-  // }
+  &.has-blend-mode {
+    mix-blend-mode: exclusion;
+  }
 }
 
 .custom-cursor {
@@ -122,6 +132,10 @@
   transition: width .3s linear;
   transition: height .3s linear;
 
+  &.first {
+    border: 1px solid var(--color);
+    background: var(--color);
+  }
   &-dot {
     width: 5px;
     height: 5px;
@@ -135,33 +149,52 @@
     border-radius: 50%;
   }
 
-  &__inner {
+  &-circle {
+    width: 30px;
+    height: 30px;
+    background-color: transparent !important;
+    border-radius: 50%;
+  }
+
+  &-cross-wrapper.first {
+    width: 30px;
+    height: 30px;
+    background-color: transparent !important;
+    border-radius: 50%;
+    border: 3px solid var(--color);
+  }
+
+  &-cross,
+  &-minus {
     position: relative;
     width: 100%;
     height: 100%;
-    &:before,
+    &:before {
+      content: "";
+      position: absolute;
+      width: 40%;
+      height: 1px;
+      background: var(--color);
+      transition: transform 0.1s linear;
+      left: 50%;
+      top: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  &-cross {
     &:after {
       content: "";
       position: absolute;
       width: 40%;
       height: 1px;
-      background: transparent;
+      background: var(--color);
       transition: transform 0.1s linear;
-    }
-    &:before {
-      left: 50%;
-      top: 50%;
-      transform: translateX(-50%);
-    }
-    &:after {
       left: 50%;
       top: 50%;
       transform: translateX(-50%) rotate(-90deg);
     }
-    &.is-closing:after {
-      transform: translateX(-50%) rotate(0deg);
-    }
   }
+  
 }
 :global(.cursor-canvas) {
   position: fixed;

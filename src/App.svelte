@@ -78,6 +78,9 @@ import { magneticCursor } from '@yerkopalma/cursor'
       <option>dot</option>
       <option>spot</option>
       <option>ring</option>
+      <option>circle</option>
+      <option>cross</option>
+      <option>minus</option>
     </select>
   </div>
   {@html body}

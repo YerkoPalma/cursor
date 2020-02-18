@@ -5,7 +5,7 @@ context('Actions', () => {
     cy.visit('http://localhost:5000')
   })
 
-  it('Should render a greeting', () => {
-    cy.findByText('Hello world!').should('exist')
+  it('Should render cursor', () => {
+    cy.get('.cursor-wrapper').should('exist')
   })
 })

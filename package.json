@@ -11,7 +11,6 @@
     "@testing-library/cypress": "5.3.0",
     "autoprefixer": "9.7.4",
     "cypress": "3.8.3",
-    "depcheck": "0.9.2",
     "eslint": "6.8.0",
     "eslint-plugin-cypress": "2.9.0",
     "eslint-plugin-svelte3": "2.7.3",
@@ -67,7 +66,7 @@
     "lint": "standard --fix",
     "prepublishOnly": "npm run build",
     "start": "sirv public",
-    "test": "standard --verbose | snazzy && depcheck --ignores='postcss*' && start-server-and-test dev http://localhost:5000 cy:run"
+    "test": "standard --verbose | snazzy && start-server-and-test dev http://localhost:5000 cy:run"
   },
   "svelte": "src/components/components.module.js"
 }

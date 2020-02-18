@@ -1,3 +1,84 @@
+<script context="module">
+  let wrapper
+
+  export function simpleCursorFactory (classes, replace = false) {
+    if (typeof classes === 'string') {
+      classes = {
+        outer: classes,
+        inner: ''
+      }
+    } else if (!classes) {
+      throw new Error('Must provide a classes object/string.')
+    }
+    const svelteClass = Array.from(document.querySelector('.cursor-wrapper').classList).filter(c => /svelte/.test(c)).pop()
+    let originalClasses = {
+      outer: '',
+      inner: ''
+    }
+    const handleMouseEnter = e => {
+      originalClasses.outer = document.querySelector('.custom-cursor.first').className
+      originalClasses.inner = document.querySelector('.custom-cursor .custom-cursor').className
+      if (classes.outer) {
+        if (replace) {
+          document.querySelector('.custom-cursor.first').className = `${classes.outer} ${svelteClass}`
+        } else {
+          document.querySelector('.custom-cursor.first').classList.add(classes.outer)
+        }
+      }
+      if (classes.inner) {
+        if (replace) {
+          document.querySelector('.custom-cursor .custom-cursor').className = `${classes.inner} ${svelteClass}`
+        } else {
+          document.querySelector('.custom-cursor .custom-cursor').classList.add(classes.inner)
+        }
+      }
+    }
+
+    const handleMouseLeave = () => {
+      document.querySelector('.custom-cursor.first').className = originalClasses.outer
+      document.querySelector('.custom-cursor .custom-cursor').className = originalClasses.inner
+    }
+    return {
+      handleMouseEnter,
+      handleMouseLeave
+    }
+  }
+
+  export function plainCursor (node) {
+    const { handleMouseEnter, handleMouseLeave } = simpleCursorFactory({
+      outer: 'custom-cursor first custom-cursor-hover',
+      inner: 'custom-cursor'
+    }, true)
+
+    node.addEventListener('mouseenter', handleMouseEnter)
+    node.addEventListener('mouseleave', handleMouseLeave)
+
+    return {
+      destroy () {
+        node.removeEventListener('mouseenter', handleMouseEnter)
+        node.removeEventListener('mouseleave', handleMouseLeave)
+      }
+    }
+  }
+
+  export function crossCursor (node) {
+    const { handleMouseEnter, handleMouseLeave } = simpleCursorFactory({
+      outer: 'custom-cursor-cross-wrapper',
+      inner: 'custom-cursor-cross'
+    })
+
+    node.addEventListener('mouseenter', handleMouseEnter)
+    node.addEventListener('mouseleave', handleMouseLeave)
+
+    return {
+      destroy () {
+        node.removeEventListener('mouseenter', handleMouseEnter)
+        node.removeEventListener('mouseleave', handleMouseLeave)
+      }
+    }
+  }
+</script>
+
 <script>
   import { spring } from 'svelte/motion'
   import { onMount, afterUpdate } from 'svelte'
@@ -8,6 +89,7 @@
     stiffness: 0.1,
     damping: 0.4
   })
+  let hover
   const handleMouseMove = (e) => coords.set({ x: e.clientX, y: e.clientY })
   export let color = '#fefefe'
   export let type = 'dot'
@@ -54,7 +136,7 @@
     const lerp = (a, b, n) => {
       return (1 - n) * a + n * b
     }
-    
+
     // function to map a value from one range to another range
     const map = (value, in_min, in_max, out_min, out_max) => {
       return (
@@ -68,7 +150,6 @@
       lastX = lerp(lastX, $coords.x, 0.2);
       lastY = lerp(lastY, $coords.y, 0.2);
       group.position = new paper.Point(lastX, lastY);
-      polygon.strokeColor = color
     }
   }
   $: if (type) {
@@ -81,7 +162,7 @@
   on:mousemove={handleMouseMove}
 />
 
-<div class="cursor-wrapper">
+<div class="cursor-wrapper" bind:this={wrapper}>
   <div
     use:cssVars={styleVars}
     class="custom-cursor first" 
@@ -89,6 +170,7 @@
     class:custom-cursor-spot="{type === 'spot'}"
     class:custom-cursor-circle="{type === 'circle'}"
     class:custom-cursor-cross-wrapper="{type === 'cross' || type === 'minus'}"
+    class:custom-cursor-hover="{hover === 'hover'}"
     style="transform: translate({$coords.x}px, {$coords.y}px); ">
     <div 
       class="custom-cursor"
@@ -194,7 +276,12 @@
       transform: translateX(-50%) rotate(-90deg);
     }
   }
-  
+  &-hover {
+    width: 10px;
+    height: 10px;
+    opacity: .8;
+    border-radius: 50%;
+  }
 }
 :global(.cursor-canvas) {
   position: fixed;

@@ -1,5 +1,5 @@
 <script>
-  import { Cursor } from './components/components.module.js';
+  import { Cursor, plainCursor, crossCursor } from './components/components.module.js';
   const body = `
   <h1>@yerkopalma/cursor</h1>
 <p>Custom cursor component</p>
@@ -70,8 +70,8 @@ import { magneticCursor } from '@yerkopalma/cursor'
 <article class="markdown-body">
   <div>
     <span>Cursor color:</span>
-    <button on:click="{e => color = '#137752' }">dark-green</button>
-    <button on:click="{e => color = '#A463F2' }">light-purple</button>
+    <button use:plainCursor on:click="{e => color = '#137752' }">dark-green</button>
+    <button use:crossCursor on:click="{e => color = '#A463F2' }">light-purple</button>
     <button on:click="{e => color = '#E7040F' }">dark-red</button>
     <span>Cursor type:</span>
     <select bind:value={type}>

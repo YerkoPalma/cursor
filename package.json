@@ -68,5 +68,6 @@
     "start": "sirv public",
     "test": "standard --verbose | snazzy && start-server-and-test dev http://localhost:5000 cy:run"
   },
-  "svelte": "src/components/components.module.js"
+  "svelte": "src/components/components.module.js",
+  "version": "1.0.0"
 }

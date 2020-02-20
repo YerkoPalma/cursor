@@ -180,7 +180,7 @@
   </div>
 </div>
 
-<style type="text/scss">
+<style>
 :global(*) {
   cursor: none !important;
 }
@@ -191,98 +191,90 @@
   padding: 0;
 }
 .cursor-wrapper {
-  position: fixed;
-  opacity: 1;
-  width: 100px;
-  height: 100px;
-  left: -50px;
-  top: -50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1600000;
-  pointer-events: none;
-  &.has-blend-mode {
-    mix-blend-mode: exclusion;
-  }
+   position: fixed;
+   opacity: 1;
+   width: 100px;
+   height: 100px;
+   left: -50px;
+   top: -50px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   z-index: 1600000;
+   pointer-events: none;
 }
-
-.custom-cursor {
-  position: relative;
-  left: 0;
-  top: 0;
-  transition: width .3s linear;
-  transition: height .3s linear;
-
-  &.first {
-    border: 1px solid var(--color);
-    background: var(--color);
-  }
-  &-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-  }
-
-  &-spot {
-    width: 30px;
-    height: 30px;
-    opacity: .7;
-    border-radius: 50%;
-  }
-
-  &-circle {
-    width: 30px;
-    height: 30px;
-    background-color: transparent !important;
-    border-radius: 50%;
-  }
-
-  &-cross-wrapper.first {
-    width: 30px;
-    height: 30px;
-    background-color: transparent !important;
-    border-radius: 50%;
-    border: 3px solid var(--color);
-  }
-
-  &-cross,
-  &-minus {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    &:before {
-      content: "";
-      position: absolute;
-      width: 40%;
-      height: 1px;
-      background: var(--color);
-      transition: transform 0.1s linear;
-      left: 50%;
-      top: 50%;
-      transform: translateX(-50%);
-    }
-  }
-  &-cross {
-    &:after {
-      content: "";
-      position: absolute;
-      width: 40%;
-      height: 1px;
-      background: var(--color);
-      transition: transform 0.1s linear;
-      left: 50%;
-      top: 50%;
-      transform: translateX(-50%) rotate(-90deg);
-    }
-  }
-  &-hover {
-    width: 10px;
-    height: 10px;
-    opacity: .8;
-    border-radius: 50%;
-  }
+ .cursor-wrapper.has-blend-mode {
+   mix-blend-mode: exclusion;
 }
+ .custom-cursor {
+   position: relative;
+   left: 0;
+   top: 0;
+   transition: width 0.3s linear;
+   transition: height 0.3s linear;
+}
+ .custom-cursor.first {
+   border: 1px solid var(--color);
+   background: var(--color);
+}
+ .custom-cursor-dot {
+   width: 5px;
+   height: 5px;
+   border-radius: 50%;
+}
+ .custom-cursor-spot {
+   width: 30px;
+   height: 30px;
+   opacity: 0.7;
+   border-radius: 50%;
+}
+ .custom-cursor-circle {
+   width: 30px;
+   height: 30px;
+   background-color: transparent !important;
+   border-radius: 50%;
+}
+ .custom-cursor-cross-wrapper.first {
+   width: 30px;
+   height: 30px;
+   background-color: transparent !important;
+   border-radius: 50%;
+   border: 3px solid var(--color);
+}
+ .custom-cursor-cross, .custom-cursor-minus {
+   position: relative;
+   width: 100%;
+   height: 100%;
+}
+ .custom-cursor-cross:before, .custom-cursor-minus:before {
+   content: "";
+   position: absolute;
+   width: 40%;
+   height: 1px;
+   background: var(--color);
+   transition: transform 0.1s linear;
+   left: 50%;
+   top: 50%;
+   transform: translateX(-50%);
+}
+ .custom-cursor-cross:after {
+   content: "";
+   position: absolute;
+   width: 40%;
+   height: 1px;
+   background: var(--color);
+   transition: transform 0.1s linear;
+   left: 50%;
+   top: 50%;
+   transform: translateX(-50%) rotate(-90deg);
+}
+ .custom-cursor-hover {
+   width: 10px;
+   height: 10px;
+   opacity: 0.8;
+   border-radius: 50%;
+}
+ 
 :global(.cursor-canvas) {
   position: fixed;
   left: 0;

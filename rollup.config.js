@@ -6,7 +6,6 @@ import livereload from 'rollup-plugin-livereload'
 import pkg from './package.json'
 import resolve from 'rollup-plugin-node-resolve'
 import svelte from 'rollup-plugin-svelte'
-import { sass } from 'svelte-preprocess-sass'
 
 const production = !process.env.ROLLUP_WATCH
 const name = pkg.name
@@ -55,9 +54,7 @@ export default {
        * '<template>'/'external src files' support
        **/
       preprocess: autoPreprocess({
-        postcss: true,
-        scss: { includePaths: ['src', 'node_modules'] },
-        style: sass({}, { name: 'scss' })
+        postcss: true
       })
     }),
 
